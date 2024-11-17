@@ -1,0 +1,44 @@
+cabal-version:        3.0
+name:                 th-canonical
+version:              0.1.0.0
+synopsis:             Transform Template Haskell ASTs to canonical form.
+description:          Enable comparison of Template Haskell ASTs for easy codegen testing.
+license:              BSD-3-Clause
+license-file:         LICENSE
+author:               L. S. Leary
+maintainer:           L.S.Leary.II@gmail.com
+copyright:            (c) L. S. Leary 2024
+category:             Language
+build-type:           Simple
+extra-doc-files:      CHANGELOG.md
+tested-with:          GHC == 9.6.5
+                    , GHC == 9.8.2
+                    , GHC == 9.10.1
+
+common shared
+  default-language:   GHC2021
+  default-extensions: BlockArguments
+                    , LambdaCase
+  build-depends:      base             >= 4.18.0 && < 4.21
+                    , template-haskell >= 2.20.0 && < 2.23
+  ghc-options:        -Wall
+
+library
+  import:             shared
+  other-modules:      Data.Ordered.Set
+  exposed-modules:    Language.Haskell.TH.Canonical
+  build-depends:      containers       >= 0.6.3  && < 0.8
+                    , transformers     >= 0.0.0  && < 0.7
+  hs-source-dirs:     src
+
+test-suite canon-tests
+  import:             shared
+  type:               exitcode-stdio-1.0
+  hs-source-dirs:     test
+  main-is:            Tests.hs
+  build-depends:      th-canonical
+
+source-repository head
+  type:     git
+  location: https://github.com/LSLeary/th-canonical.git
+
